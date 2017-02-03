@@ -8,10 +8,7 @@ class ScrobblerService
     @session = get_session
   end
 
-  def get_recent_tracks(user, opts={})
-    limit = opts['limit'] || 200
-    to = opts['to'] || Time.current.to_i
-    from = opts['from'] || (Time.current - 24.hours).to_i
+  def get_tracks(user:, limit:, from:, to:)
     @session.user.get_recent_tracks(user, limit, nil, to, from)
   end
 
