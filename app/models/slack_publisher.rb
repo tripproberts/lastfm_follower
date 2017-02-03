@@ -4,18 +4,19 @@ class SlackPublisher
     @client = Slack::Web::Client.new
   end
 
-  def publish_top_user_tracks(user, tracks, date)
-    msg = parse_top_track_text(user, tracks, date)
+  def publish_user_top_tracks(user, tracks)
+    msg = parse_top_track_text(user, tracks)
+    publish(msg)
+  end
+
+  def publish(msg)
     @client.chat_postMessage(channel: "#now-playing", text: msg, as_user: true)
   end
 
   private
 
-  def parse_top_track_text(user, tracks, date)
-    msg = "User: #{user.username}\n" +
-          "Date: #{date.strftime("%-m/%-d/%Y")}\n" +
-          "\n" +
-          "Top tracks:\n"
+  def parse_top_track_text(user, tracks)
+    msg = "*#{user.username}*\n"
     tracks.each do |track|
       msg << "#{track[1].to_s} plays: #{track[0].artist} - #{track[0].name}\n"
     end
