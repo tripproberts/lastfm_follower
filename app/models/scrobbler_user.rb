@@ -3,7 +3,7 @@ class ScrobblerUser < ApplicationRecord
   has_many :scrobbles
 
   def get_top_tracks(limit: 5, from: Time.current.beginning_of_day, to: Time.now.end_of_day)
-    scrobbles_in_period = scrobbles.where(uts: from.to_i..Float::INFINITY).or(scrobbles.where(uts: 0..to.to_i))
+    scrobbles_in_period = scrobbles.where(uts: from.to_i..Float::INFINITY).or(scrobbles.where(uts: from.to_i..to.to_i))
     track_listen_count = Hash.new(0)
     scrobbles_in_period.each { |s| track_listen_count[s.track] += 1 }
     ordered_tracks = track_listen_count.sort_by(&:last).reverse
