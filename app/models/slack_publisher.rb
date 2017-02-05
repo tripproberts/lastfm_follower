@@ -10,7 +10,11 @@ class SlackPublisher
   end
 
   def publish(msg)
-    @client.chat_postMessage(channel: "#now-playing", text: msg, as_user: true)
+    if Rails.env.production?
+      @client.chat_postMessage(channel: "#now-playing", text: msg, as_user: true)
+    else
+      puts msg
+    end
   end
 
   private
