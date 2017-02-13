@@ -10,7 +10,7 @@ task sync_scrobbles_and_publish_top_songs: :environment do
     user.save!
 
     top_tracks = user.get_top_tracks(from: from, to: to)
-    publisher.publish_user_top_tracks(user, top_tracks)
+    #publisher.publish_user_top_tracks(user, top_tracks)
   end
 end
 
