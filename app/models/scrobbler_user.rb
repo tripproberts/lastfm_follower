@@ -24,6 +24,7 @@ class ScrobblerUser < ApplicationRecord
 
   def fetch_scrobbles(limit: 200, from:, to: Time.now)
     responses = ScrobblerService.new.get_tracks(user: username, limit: limit, from: from.to_i, to: to.to_i)
+    responses = [responses] if responses.is_a? Hash
     responses.nil? ? [] : responses.map { |r|
       s = Scrobble.build_from_service(r)
       s.scrobbler_user = self unless s.nil?
