@@ -36,4 +36,8 @@ class ScrobblerUser < ApplicationRecord
     }.compact
   end
 
+  def fetch_user_info
+    ScrobblerService.new.get_user_info(username)
+  end
+
 end
