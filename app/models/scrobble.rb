@@ -21,4 +21,8 @@ class Scrobble < ApplicationRecord
     end
   end
 
+  def date
+    Time.at(uts)
+  end
+
 end
