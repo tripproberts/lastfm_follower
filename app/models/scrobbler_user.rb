@@ -10,6 +10,10 @@ class ScrobblerUser < ApplicationRecord
     ordered_tracks[0,limit]
   end
 
+  def registered_at
+    Time.at(registered_at_int)
+  end
+
   def fetch_missing_scrobbles(limit: 200, from:, to: Time.now)
     responses = fetch_scrobbles(limit: limit, from: from, to: to)
     if (responses.empty?)
