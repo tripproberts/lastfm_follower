@@ -1,5 +1,5 @@
-desc "Sync scrobbles for the previous day"
-task sync_scrobbles_and_publish_top_songs: :environment do
+desc "Save scrobbles for the previous day"
+task save_scrobbles_and_publish_top_songs: :environment do
   from = (Time.now.beginning_of_day - 24.hours).utc
   to = (Time.now.end_of_day - 24.hours).utc
   publisher = SlackPublisher.new
