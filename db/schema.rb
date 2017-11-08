@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302033340) do
+ActiveRecord::Schema.define(version: 20171108010426) do
 
   create_table "scrobbler_users", force: :cascade do |t|
     t.string   "username"
@@ -25,6 +25,22 @@ ActiveRecord::Schema.define(version: 20170302033340) do
     t.integer  "scrobbler_user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+  end
+
+  create_table "spotify_playlists", force: :cascade do |t|
+    t.string   "spotify_id"
+    t.integer  "spotify_user_id"
+    t.integer  "scrobbler_user_id"
+    t.datetime "last_updated_on_spotify_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "spotify_users", force: :cascade do |t|
+    t.string   "spotify_id"
+    t.text     "rspotify_hash"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "tracks", force: :cascade do |t|
