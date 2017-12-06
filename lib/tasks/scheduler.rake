@@ -17,10 +17,10 @@ task save_scrobbler_user_info: :environment do
 end
 
 desc "Save all missing scrobbles from entire user history"
-task :save_all_missing_scrobbles, [:username, :date] => :environment do |t, args|
+task :save_all_missing_scrobbles, [:username, :from, :to] => :environment do |t, args|
   user = ScrobblerUser.find_by_username(args.username)
-  from = Date.strptime(args.date, "%Y-%m-%d").beginning_of_day.to_datetime
-  to = DateTime.now
+  from = Date.strptime(args.from, "%Y-%m-%d").beginning_of_day.to_datetime
+  to = Date.strptime(args.to, "%Y-%m-%d").beginning_of_day.to_datetime
   (from..to).each do |d|
     puts "Fetching scrobbles for date: #{d.strftime("%-m/%-d/%Y")}"
     scrobbles = user.fetch_missing_scrobbles(from: d, to: d + 1.day)
