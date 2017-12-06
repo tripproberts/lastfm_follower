@@ -20,7 +20,8 @@ class SpotifyPlaylist < ApplicationRecord
 
     tracks = []
     scrobbler_user.get_top_tracks(limit: limit, from: from, to: to).each do |s|
-      tracks << RSpotify::Track.search(s[0].to_s).first
+      track = RSpotify::Track.search(s[0].to_s).first
+      tracks << track unless track == nil
     end
     rspotify_playlist.replace_tracks!(tracks)
     self.last_updated_on_spotify_at = DateTime.now
