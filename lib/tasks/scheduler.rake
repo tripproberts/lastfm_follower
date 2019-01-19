@@ -29,3 +29,17 @@ task :save_all_missing_scrobbles, [:username, :from, :to] => :environment do |t,
     puts "Saved #{scrobbles.count} scrobbles"
   end
 end
+
+desc "Merge tracks with same artist and song"
+task merge_tracks: :environment do
+  Track.all.order(:created_at).each do |t|
+    other_tracks = Track.where(name: t.name, artist: t.artist)
+    other_tracks.each do |other_track|
+      if other_track.id != t.id
+        other_scrobbles = other_track.scrobbles
+        # scrobbles.update_all(track_id: t.id)
+        puts "Moving " + other_scrobbles.size.to_s + " scrobbles from " + other_track.artist + " - " + other_track.name + " to " + t.artist + " - " + t.name
+      end
+    end
+  end
+end
