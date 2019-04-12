@@ -1,7 +1,7 @@
 desc "Download new scrobbles and update playlists"
 task download_scrobbles_and_update_playlists: :environment do
   DownloadNewScrobblesJob.new({
-    from: Time.now.beginning_of_day.utc - 1.day,
+    from: Time.now.beginning_of_day.utc - 3.day,
     to: Time.now.end_of_day.utc - 1.day,
     users: ScrobblerUser.all
   }).doJob
