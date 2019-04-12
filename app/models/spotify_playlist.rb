@@ -11,7 +11,7 @@ class SpotifyPlaylist < ApplicationRecord
     @rspotify_playlist ||= spotify_user.get_playlist(spotify_id)
   end
 
-  def update_on_spotify(limit: 10, to: DateTime.now.beginning_of_day.utc, from: DateTime.now.beginning_of_day.utc - 7.days)
+  def update_on_spotify(limit: 10, to: DateTime.now.in_time_zone('EST').beginning_of_day, from: DateTime.now.in_time_zone('EST').beginning_of_day - 7.days)
     RSpotify::authenticate(ENV['TEN_SPOTIFY_ID'], ENV['TEN_SPOTIFY_SECRET'])
     if spotify_id.nil? or spotify_id.empty?
       id = spotify_user.create_playlist_on_spotify!('10').id
